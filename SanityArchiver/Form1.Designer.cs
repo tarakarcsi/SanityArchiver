@@ -30,6 +30,8 @@
         {
             this.BrowseButton = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListBox();
+            this.ZipFileButton = new System.Windows.Forms.Button();
+            this.OpenFileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BrowseButton
@@ -51,11 +53,33 @@
             this.fileList.Size = new System.Drawing.Size(364, 290);
             this.fileList.TabIndex = 1;
             // 
+            // ZipFileButton
+            // 
+            this.ZipFileButton.Location = new System.Drawing.Point(268, 12);
+            this.ZipFileButton.Name = "ZipFileButton";
+            this.ZipFileButton.Size = new System.Drawing.Size(108, 27);
+            this.ZipFileButton.TabIndex = 2;
+            this.ZipFileButton.Text = "Zip";
+            this.ZipFileButton.UseVisualStyleBackColor = true;
+            //this.ZipFileButton.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // OpenFileButton
+            // 
+            this.OpenFileButton.Location = new System.Drawing.Point(141, 12);
+            this.OpenFileButton.Name = "OpenFileButton";
+            this.OpenFileButton.Size = new System.Drawing.Size(108, 27);
+            this.OpenFileButton.TabIndex = 3;
+            this.OpenFileButton.Text = "Open";
+            this.OpenFileButton.UseVisualStyleBackColor = true;
+            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.OpenFileButton);
+            this.Controls.Add(this.ZipFileButton);
             this.Controls.Add(this.fileList);
             this.Controls.Add(this.BrowseButton);
             this.Name = "Form1";
@@ -68,6 +92,8 @@
 
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.ListBox fileList;
+        private System.Windows.Forms.Button ZipFileButton;
+        private System.Windows.Forms.Button OpenFileButton;
     }
 }
 

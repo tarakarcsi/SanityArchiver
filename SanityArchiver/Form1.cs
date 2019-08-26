@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,6 +39,32 @@ namespace SanityArchiver
                 }
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+        /*
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            using (FileStream input = fileToArchive.OpenRead())
+            {
+                FileStream output = File.Create(path + @"\" + fileToArchive.Name + ".gz");
+                GZipStream compressor = new GZipStream(output, CompressionMode.Compress);
+                int b = input.ReadByte();
+
+                while (b != -1)
+                {
+                    compressor.WriteByte((byte)b);
+                    b = input.ReadByte();
+                }
+            }
+        }*/
+
+        private void OpenFileButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(fileList.SelectedItem.ToString());
         }
     }
 }
