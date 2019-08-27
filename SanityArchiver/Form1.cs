@@ -34,7 +34,7 @@ namespace SanityArchiver
         public Form1()
         {
             InitializeComponent();
-            Path = @"C:\Users\tarak";
+            Path = @"C:\Users\tarak\";
         }
 
         public void ShowFiles(string path)
@@ -102,6 +102,16 @@ namespace SanityArchiver
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ColumnHeader header1 = new ColumnHeader();
+            header1.Text = "Name";
+            header1.Name = "name";
+            fileList_left.Columns.Add(header1);
+            ColumnHeader header2 = new ColumnHeader();
+            header2.Text = "Extension";
+            header2.Name = "ext";
+            fileList_left.Columns.Add(header2);
+
+
             ShowFiles(Path);
         }
     }

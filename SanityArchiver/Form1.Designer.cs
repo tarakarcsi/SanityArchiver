@@ -68,12 +68,12 @@
             // fileList_left
             // 
             this.fileList_left.HideSelection = false;
-            this.fileList_left.Location = new System.Drawing.Point(12, 59);
+            this.fileList_left.Location = new System.Drawing.Point(21, 59);
             this.fileList_left.Name = "fileList_left";
             this.fileList_left.Size = new System.Drawing.Size(355, 297);
             this.fileList_left.TabIndex = 4;
             this.fileList_left.UseCompatibleStateImageBehavior = false;
-            this.fileList_left.View = System.Windows.Forms.View.SmallIcon;
+            this.fileList_left.View = System.Windows.Forms.View.Details;
             this.fileList_left.SelectedIndexChanged += new System.EventHandler(this.fileList_left_SelectedIndexChanged);
             // 
             // fileList_right
