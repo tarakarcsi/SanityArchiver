@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,39 +15,61 @@ namespace SanityArchiver
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
+        public FileInfo SelectedFile { get; set; }
+        public string Path { get; set; }
 
-        private void BrowseButton_Click(object sender, EventArgs e)
+        private ListViewItem SelectedItem
         {
-            FolderBrowserDialog FBD = new FolderBrowserDialog();
-
-            if(FBD.ShowDialog() == DialogResult.OK)
+            get
             {
-                fileList.Items.Clear();
-                string[] files = Directory.GetFiles(FBD.SelectedPath);
-                string[] dirs = Directory.GetDirectories(FBD.SelectedPath);
-
-                foreach(string file in files)
+                if (fileList_left.SelectedItems.Count > 0)
                 {
-                    fileList.Items.Add(file);
+                    return fileList_left.SelectedItems[0];
                 }
-                foreach (string dir in dirs)
-                {
-                    fileList.Items.Add(dir);
-                }
-
+                else
+                    return null;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public Form1()
         {
+            InitializeComponent();
+            Path = @"C:\Users\tarak";
+        }
+
+        public void ShowFiles(string path)
+        {
+            FileHandler fileHandler = new FileHandler(Path);
+
+            try
+            {
+                foreach (var item in fileHandler.Directories)
+                {
+                    string[] details = { item.Name, "DIR", item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    ListViewItem listViewItem = new ListViewItem(details);
+                    fileList_left.Items.Add(listViewItem);
+                }
+
+                foreach(var item in fileHandler.Files)
+                {
+                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    ListViewItem listViewItem = new ListViewItem(details);
+                    fileList_left.Items.Add(listViewItem);
+                }
+            }catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"File or folder cannot be accessed.\n\nError message: {ex.Message}\n\n" +
+                        $"Details:\n\n{ex.StackTrace}");
+            }
 
         }
-        /*
-        private void button1_Click_1(object sender, EventArgs e)
+
+        private void OpenFileButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(SelectedItem.Text);
+        }
+
+        public void Archive(FileInfo fileToArchive, string path)
         {
             using (FileStream input = fileToArchive.OpenRead())
             {
@@ -60,11 +83,28 @@ namespace SanityArchiver
                     b = input.ReadByte();
                 }
             }
-        }*/
+        }
 
-        private void OpenFileButton_Click(object sender, EventArgs e)
+        private void ZipFileButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(fileList.SelectedItem.ToString());
+            Archive(SelectedFile, Path);
+        }
+
+        private void fileList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileList_left_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedFile = new FileInfo(SelectedItem.Text);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ShowFiles(Path);
         }
     }
+
+
 }
