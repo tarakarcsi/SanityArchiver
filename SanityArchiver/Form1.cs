@@ -17,6 +17,7 @@ namespace SanityArchiver
     {
         public FileInfo SelectedFile { get; set; }
         public string Path { get; set; }
+        public DirectoryInfo SelectedDirectory { get; set; }
 
         private ListViewItem SelectedItem
         {
@@ -39,6 +40,7 @@ namespace SanityArchiver
 
         public void ShowFiles(string path)
         {
+            fileList_left.Items.Clear();
             FileHandler fileHandler = new FileHandler(Path);
 
             try
@@ -181,9 +183,25 @@ namespace SanityArchiver
             ShowFiles(Path);
         }
 
-        private void fileList_right_SelectedIndexChanged(object sender, EventArgs e)
+        private void OpenDirs()
         {
+            
+        }
 
+        private void fileList_left_ItemActivate(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = fileList_left.SelectedItems[0];
+            if (selectedItem.SubItems[1].Text == "DIR")
+            {
+                SelectedDirectory = new DirectoryInfo(Path + @"\" + selectedItem.Text);
+                Path = Path + @"\" + selectedItem.Text;
+                ShowFiles(Path);
+            }
+            else
+            {
+                SelectedFile = new FileInfo(Path + @"\" + selectedItem.Text);
+                System.Diagnostics.Process.Start(SelectedFile.FullName);
+            }
         }
     }
 

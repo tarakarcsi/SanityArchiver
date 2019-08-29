@@ -78,6 +78,7 @@ namespace SanityArchiver
             this.fileList_left.TabIndex = 4;
             this.fileList_left.UseCompatibleStateImageBehavior = false;
             this.fileList_left.View = System.Windows.Forms.View.Details;
+            this.fileList_left.ItemActivate += new System.EventHandler(this.fileList_left_ItemActivate);
             this.fileList_left.SelectedIndexChanged += new System.EventHandler(this.fileList_left_SelectedIndexChanged);
             // 
             // fileList_right
@@ -89,7 +90,7 @@ namespace SanityArchiver
             this.fileList_right.TabIndex = 5;
             this.fileList_right.UseCompatibleStateImageBehavior = false;
             this.fileList_right.View = System.Windows.Forms.View.Details;
-            this.fileList_right.SelectedIndexChanged += new System.EventHandler(this.fileList_right_SelectedIndexChanged);
+            //this.fileList_right.SelectedIndexChanged += new System.EventHandler(this.fileList_right_SelectedIndexChanged);
             // 
             // driveBox_left
             // 
