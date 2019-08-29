@@ -16,7 +16,7 @@ namespace SanityArchiver
     public partial class Form1 : Form
     {
         public FileInfo SelectedFile { get; set; }
-        public string Path { get; set; }
+        public string currentPath { get; set; }
         public DirectoryInfo SelectedDirectory { get; set; }
 
         private ListViewItem SelectedItem
@@ -35,13 +35,13 @@ namespace SanityArchiver
         public Form1()
         {
             InitializeComponent();
-            Path = @"C:\Users\tarak\";
+            currentPath = @"C:\Users\tarak\";
         }
 
-        public void ShowFiles(string path)
+        public void ShowFiles(string currentPath)
         {
             fileList_left.Items.Clear();
-            FileHandler fileHandler = new FileHandler(Path);
+            FileHandler fileHandler = new FileHandler(currentPath);
 
             try
             {
@@ -60,12 +60,12 @@ namespace SanityArchiver
                     string[] details = { item.Name, "DIR", item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
                     ListViewItem listViewItem = new ListViewItem(details);
                     fileList_right.Items.Add(listViewItem);
-                    
+
                 }
 
                 foreach (var item in fileHandler.Files)
                 {
-                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString(), (item.Length / 1024).ToString() };
                     ListViewItem listViewItem = new ListViewItem(details);
                     fileList_left.Items.Add(listViewItem);
                     /*ListViewItem clonedItem = new ListViewItem();
@@ -75,11 +75,14 @@ namespace SanityArchiver
 
                 foreach (var item in fileHandler.Files)
                 {
-                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString(), (item.Length / 1024).ToString() };
                     ListViewItem listViewItem = new ListViewItem(details);
                     fileList_right.Items.Add(listViewItem);
-                    
+
                 }
+                //fileList_left.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -89,16 +92,13 @@ namespace SanityArchiver
 
         }
 
-        private void OpenFileButton_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(SelectedItem.Text);
-        }
 
-        public void Archive(FileInfo fileToArchive, string path)
+
+        public void Archive(FileInfo fileToArchive, string currentPath)
         {
             using (FileStream input = fileToArchive.OpenRead())
             {
-                FileStream output = File.Create(path + @"\" + fileToArchive.Name + ".gz");
+                FileStream output = File.Create(currentPath + @"\" + fileToArchive.Name + ".gz");
                 GZipStream compressor = new GZipStream(output, CompressionMode.Compress);
                 int b = input.ReadByte();
 
@@ -112,7 +112,7 @@ namespace SanityArchiver
 
         private void ZipFileButton_Click(object sender, EventArgs e)
         {
-            Archive(SelectedFile, Path);
+            Archive(SelectedFile, currentPath);
         }
 
         private void fileList_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,6 +147,11 @@ namespace SanityArchiver
             left_header4.Name = "attributes";
             fileList_left.Columns.Add(left_header4);
 
+            ColumnHeader left_header5 = new ColumnHeader();
+            left_header5.Text = "Size";
+            left_header5.Name = "size";
+            fileList_left.Columns.Add(left_header5);
+
             ColumnHeader right_header1 = new ColumnHeader();
             right_header1.Text = "Name";
             right_header1.Name = "name";
@@ -167,6 +172,11 @@ namespace SanityArchiver
             right_header4.Name = "attributes";
             fileList_right.Columns.Add(right_header4);
 
+            ColumnHeader right_header5 = new ColumnHeader();
+            right_header5.Text = "Size";
+            right_header5.Name = "size";
+            fileList_right.Columns.Add(right_header5);
+
 
 
 
@@ -180,12 +190,12 @@ namespace SanityArchiver
                 driveBox_right.Items.Add(di.ToString());
             }
 
-            ShowFiles(Path);
+            ShowFiles(currentPath);
         }
 
         private void OpenDirs()
         {
-            
+
         }
 
         private void fileList_left_ItemActivate(object sender, EventArgs e)
@@ -193,17 +203,45 @@ namespace SanityArchiver
             ListViewItem selectedItem = fileList_left.SelectedItems[0];
             if (selectedItem.SubItems[1].Text == "DIR")
             {
-                SelectedDirectory = new DirectoryInfo(Path + @"\" + selectedItem.Text);
-                Path = Path + @"\" + selectedItem.Text;
-                ShowFiles(Path);
+                SelectedDirectory = new DirectoryInfo(currentPath + @"\" + selectedItem.Text);
+                currentPath = currentPath + @"\" + selectedItem.Text;
+                ShowFiles(currentPath);
             }
             else
             {
-                SelectedFile = new FileInfo(Path + @"\" + selectedItem.Text);
+                SelectedFile = new FileInfo(currentPath + @"\" + selectedItem.Text);
+                System.Diagnostics.Process.Start(SelectedFile.FullName);
+            }
+        }
+
+        private void backButton_Click_1(object sender, EventArgs e)
+        {
+            if (currentPath != Path.GetPathRoot(Environment.SystemDirectory))
+            {
+                if (SelectedDirectory != null && new DirectoryInfo(SelectedDirectory.Parent.FullName) != null)
+                {
+                    SelectedDirectory = new DirectoryInfo(SelectedDirectory.Parent.FullName);
+                    currentPath = SelectedDirectory.FullName;
+                    ShowFiles(currentPath);
+                }
+            }
+
+        }
+
+        private void fileList_right_ItemActivate(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = fileList_right.SelectedItems[0];
+            if (selectedItem.SubItems[1].Text == "DIR")
+            {
+                SelectedDirectory = new DirectoryInfo(currentPath + @"\" + selectedItem.Text);
+                currentPath = currentPath + @"\" + selectedItem.Text;
+                ShowFiles(currentPath);
+            }
+            else
+            {
+                SelectedFile = new FileInfo(currentPath + @"\" + selectedItem.Text);
                 System.Diagnostics.Process.Start(SelectedFile.FullName);
             }
         }
     }
-
-
 }

@@ -9,15 +9,15 @@ namespace SanityArchiver
 {
     public class FileHandler
     {
-        public string Path { get; set; }
+        public string currentPath { get; set; }
         public DirectoryInfo[] Directories { get; set; }
         public FileInfo[] Files { get; set; }
 
-        public FileHandler (string path)
+        public FileHandler (string currentPath)
         {
-            Path = path;
-            Directories = new DirectoryInfo(path).GetDirectories();
-            Files = new DirectoryInfo(path).GetFiles();
+            currentPath = currentPath;
+            Directories = new DirectoryInfo(currentPath).GetDirectories();
+            Files = new DirectoryInfo(currentPath).GetFiles();
         }
     }
 }

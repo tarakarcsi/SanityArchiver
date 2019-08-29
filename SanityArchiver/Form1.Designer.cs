@@ -30,44 +30,23 @@ namespace SanityArchiver
         /// </summary>
         private void InitializeComponent()
         {
-            this.BrowseButton = new System.Windows.Forms.Button();
             this.ZipFileButton = new System.Windows.Forms.Button();
-            this.OpenFileButton = new System.Windows.Forms.Button();
             this.fileList_left = new System.Windows.Forms.ListView();
             this.fileList_right = new System.Windows.Forms.ListView();
             this.driveBox_left = new System.Windows.Forms.ListView();
             this.driveBox_right = new System.Windows.Forms.ListView();
+            this.backButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // BrowseButton
-            // 
-            this.BrowseButton.AutoEllipsis = true;
-            this.BrowseButton.Location = new System.Drawing.Point(12, 12);
-            this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(110, 27);
-            this.BrowseButton.TabIndex = 0;
-            this.BrowseButton.Text = "Browse";
-            this.BrowseButton.UseVisualStyleBackColor = true;
             // 
             // ZipFileButton
             // 
-            this.ZipFileButton.Location = new System.Drawing.Point(270, 12);
+            this.ZipFileButton.Location = new System.Drawing.Point(12, 12);
             this.ZipFileButton.Name = "ZipFileButton";
             this.ZipFileButton.Size = new System.Drawing.Size(108, 27);
             this.ZipFileButton.TabIndex = 2;
             this.ZipFileButton.Text = "Zip";
             this.ZipFileButton.UseVisualStyleBackColor = true;
             this.ZipFileButton.Click += new System.EventHandler(this.ZipFileButton_Click);
-            // 
-            // OpenFileButton
-            // 
-            this.OpenFileButton.Location = new System.Drawing.Point(141, 12);
-            this.OpenFileButton.Name = "OpenFileButton";
-            this.OpenFileButton.Size = new System.Drawing.Size(108, 27);
-            this.OpenFileButton.TabIndex = 3;
-            this.OpenFileButton.Text = "Open";
-            this.OpenFileButton.UseVisualStyleBackColor = true;
-            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
             // 
             // fileList_left
             // 
@@ -90,7 +69,7 @@ namespace SanityArchiver
             this.fileList_right.TabIndex = 5;
             this.fileList_right.UseCompatibleStateImageBehavior = false;
             this.fileList_right.View = System.Windows.Forms.View.Details;
-            //this.fileList_right.SelectedIndexChanged += new System.EventHandler(this.fileList_right_SelectedIndexChanged);
+            this.fileList_right.ItemActivate += new System.EventHandler(this.fileList_right_ItemActivate);
             // 
             // driveBox_left
             // 
@@ -112,18 +91,27 @@ namespace SanityArchiver
             this.driveBox_right.UseCompatibleStateImageBehavior = false;
             this.driveBox_right.View = System.Windows.Forms.View.List;
             // 
+            // backButton
+            // 
+            this.backButton.Location = new System.Drawing.Point(12, 50);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(48, 26);
+            this.backButton.TabIndex = 8;
+            this.backButton.Text = "<-";
+            this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.backButton);
             this.Controls.Add(this.driveBox_right);
             this.Controls.Add(this.driveBox_left);
             this.Controls.Add(this.fileList_right);
             this.Controls.Add(this.fileList_left);
-            this.Controls.Add(this.OpenFileButton);
             this.Controls.Add(this.ZipFileButton);
-            this.Controls.Add(this.BrowseButton);
             this.Name = "Form1";
             this.Text = "Sanity Archiver";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -142,14 +130,12 @@ namespace SanityArchiver
         }
 
         #endregion
-
-        private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button ZipFileButton;
-        private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.ListView fileList_left;
         private System.Windows.Forms.ListView fileList_right;
         private System.Windows.Forms.ListView driveBox_left;
         private System.Windows.Forms.ListView driveBox_right;
+        private System.Windows.Forms.Button backButton;
     }
 }
 
