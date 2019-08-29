@@ -48,15 +48,38 @@ namespace SanityArchiver
                     string[] details = { item.Name, "DIR", item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
                     ListViewItem listViewItem = new ListViewItem(details);
                     fileList_left.Items.Add(listViewItem);
+                    /*ListViewItem clonedItem = new ListViewItem();
+                    listViewItem.Clone();
+                    fileList_right.Items.Add(clonedItem);*/
                 }
 
-                foreach(var item in fileHandler.Files)
+                foreach (var item in fileHandler.Directories)
+                {
+                    string[] details = { item.Name, "DIR", item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    ListViewItem listViewItem = new ListViewItem(details);
+                    fileList_right.Items.Add(listViewItem);
+                    
+                }
+
+                foreach (var item in fileHandler.Files)
                 {
                     string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
                     ListViewItem listViewItem = new ListViewItem(details);
                     fileList_left.Items.Add(listViewItem);
+                    /*ListViewItem clonedItem = new ListViewItem();
+                    listViewItem.Clone();
+                    fileList_right.Items.Add(clonedItem);*/
                 }
-            }catch (UnauthorizedAccessException ex)
+
+                foreach (var item in fileHandler.Files)
+                {
+                    string[] details = { item.Name, item.Extension, item.LastAccessTime.ToShortDateString(), item.Attributes.ToString() };
+                    ListViewItem listViewItem = new ListViewItem(details);
+                    fileList_right.Items.Add(listViewItem);
+                    
+                }
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 MessageBox.Show($"File or folder cannot be accessed.\n\nError message: {ex.Message}\n\n" +
                         $"Details:\n\n{ex.StackTrace}");
@@ -102,17 +125,65 @@ namespace SanityArchiver
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ColumnHeader header1 = new ColumnHeader();
-            header1.Text = "Name";
-            header1.Name = "name";
-            fileList_left.Columns.Add(header1);
-            ColumnHeader header2 = new ColumnHeader();
-            header2.Text = "Extension";
-            header2.Name = "ext";
-            fileList_left.Columns.Add(header2);
+            ColumnHeader left_header1 = new ColumnHeader();
+            left_header1.Text = "Name";
+            left_header1.Name = "name";
+            fileList_left.Columns.Add(left_header1);
 
+            ColumnHeader left_header2 = new ColumnHeader();
+            left_header2.Text = "Extension";
+            left_header2.Name = "ext";
+            fileList_left.Columns.Add(left_header2);
+
+            ColumnHeader left_header3 = new ColumnHeader();
+            left_header3.Text = "Last Accessed";
+            left_header3.Name = "lastAccessed";
+            fileList_left.Columns.Add(left_header3);
+
+            ColumnHeader left_header4 = new ColumnHeader();
+            left_header4.Text = "Attributes";
+            left_header4.Name = "attributes";
+            fileList_left.Columns.Add(left_header4);
+
+            ColumnHeader right_header1 = new ColumnHeader();
+            right_header1.Text = "Name";
+            right_header1.Name = "name";
+            fileList_right.Columns.Add(right_header1);
+
+            ColumnHeader right_header2 = new ColumnHeader();
+            right_header2.Text = "Extension";
+            right_header2.Name = "ext";
+            fileList_right.Columns.Add(right_header2);
+
+            ColumnHeader right_header3 = new ColumnHeader();
+            right_header3.Text = "Last Accessed";
+            right_header3.Name = "lastAccessed";
+            fileList_right.Columns.Add(right_header3);
+
+            ColumnHeader right_header4 = new ColumnHeader();
+            right_header4.Text = "Attributes";
+            right_header4.Name = "attributes";
+            fileList_right.Columns.Add(right_header4);
+
+
+
+
+            foreach (DriveInfo di in DriveInfo.GetDrives())
+            {
+                driveBox_left.Items.Add(di.ToString());
+            }
+
+            foreach (DriveInfo di in DriveInfo.GetDrives())
+            {
+                driveBox_right.Items.Add(di.ToString());
+            }
 
             ShowFiles(Path);
+        }
+
+        private void fileList_right_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

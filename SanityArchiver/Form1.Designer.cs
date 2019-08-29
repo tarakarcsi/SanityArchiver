@@ -1,4 +1,6 @@
-﻿namespace SanityArchiver
+﻿using System;
+
+namespace SanityArchiver
 {
     partial class Form1
     {
@@ -33,6 +35,8 @@
             this.OpenFileButton = new System.Windows.Forms.Button();
             this.fileList_left = new System.Windows.Forms.ListView();
             this.fileList_right = new System.Windows.Forms.ListView();
+            this.driveBox_left = new System.Windows.Forms.ListView();
+            this.driveBox_right = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // BrowseButton
@@ -47,7 +51,7 @@
             // 
             // ZipFileButton
             // 
-            this.ZipFileButton.Location = new System.Drawing.Point(268, 12);
+            this.ZipFileButton.Location = new System.Drawing.Point(270, 12);
             this.ZipFileButton.Name = "ZipFileButton";
             this.ZipFileButton.Size = new System.Drawing.Size(108, 27);
             this.ZipFileButton.TabIndex = 2;
@@ -68,7 +72,7 @@
             // fileList_left
             // 
             this.fileList_left.HideSelection = false;
-            this.fileList_left.Location = new System.Drawing.Point(21, 59);
+            this.fileList_left.Location = new System.Drawing.Point(12, 82);
             this.fileList_left.Name = "fileList_left";
             this.fileList_left.Size = new System.Drawing.Size(355, 297);
             this.fileList_left.TabIndex = 4;
@@ -79,17 +83,41 @@
             // fileList_right
             // 
             this.fileList_right.HideSelection = false;
-            this.fileList_right.Location = new System.Drawing.Point(434, 59);
+            this.fileList_right.Location = new System.Drawing.Point(434, 82);
             this.fileList_right.Name = "fileList_right";
             this.fileList_right.Size = new System.Drawing.Size(354, 297);
             this.fileList_right.TabIndex = 5;
             this.fileList_right.UseCompatibleStateImageBehavior = false;
+            this.fileList_right.View = System.Windows.Forms.View.Details;
+            this.fileList_right.SelectedIndexChanged += new System.EventHandler(this.fileList_right_SelectedIndexChanged);
+            // 
+            // driveBox_left
+            // 
+            this.driveBox_left.HideSelection = false;
+            this.driveBox_left.Location = new System.Drawing.Point(12, 385);
+            this.driveBox_left.Name = "driveBox_left";
+            this.driveBox_left.Size = new System.Drawing.Size(102, 53);
+            this.driveBox_left.TabIndex = 6;
+            this.driveBox_left.UseCompatibleStateImageBehavior = false;
+            this.driveBox_left.View = System.Windows.Forms.View.List;
+            // 
+            // driveBox_right
+            // 
+            this.driveBox_right.HideSelection = false;
+            this.driveBox_right.Location = new System.Drawing.Point(434, 385);
+            this.driveBox_right.Name = "driveBox_right";
+            this.driveBox_right.Size = new System.Drawing.Size(102, 53);
+            this.driveBox_right.TabIndex = 7;
+            this.driveBox_right.UseCompatibleStateImageBehavior = false;
+            this.driveBox_right.View = System.Windows.Forms.View.List;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.driveBox_right);
+            this.Controls.Add(this.driveBox_left);
             this.Controls.Add(this.fileList_right);
             this.Controls.Add(this.fileList_left);
             this.Controls.Add(this.OpenFileButton);
@@ -102,6 +130,16 @@
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void driveBox_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private System.Windows.Forms.Button BrowseButton;
@@ -109,6 +147,8 @@
         private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.ListView fileList_left;
         private System.Windows.Forms.ListView fileList_right;
+        private System.Windows.Forms.ListView driveBox_left;
+        private System.Windows.Forms.ListView driveBox_right;
     }
 }
 
