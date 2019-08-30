@@ -122,7 +122,7 @@ namespace SanityArchiver
 
         private void fileList_left_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedFile = new FileInfo(SelectedItem.Text);
+            SelectedFile = new FileInfo(currentPath + @"\" + fileList_left.SelectedItems[0].Text);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -243,5 +243,71 @@ namespace SanityArchiver
                 System.Diagnostics.Process.Start(SelectedFile.FullName);
             }
         }
+
+        public void Copy(FileInfo file, string newPath)
+        {
+            File.Copy(file.FullName, Path.Combine(newPath, file.Name));
+        }
+
+        public void Move(FileInfo file, string newPath)
+        {
+            File.Move(file.FullName, Path.Combine(newPath, file.Name));
+        }
+
+        private void CopyFileButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SelectedFile != null)
+                {
+                    FolderBrowserDialog FBD = new FolderBrowserDialog();
+                    DialogResult result = FBD.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        string newPath = FBD.SelectedPath;
+                        Copy(SelectedFile, newPath);
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"Error locating file.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"Error while copying file.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+            }
+        }
+
+        private void MoveFileButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SelectedFile != null)
+                {
+                    FolderBrowserDialog FBD = new FolderBrowserDialog();
+                    DialogResult result = FBD.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        string newPath = FBD.SelectedPath;
+                        Move(SelectedFile, newPath);
+                        ShowFiles(currentPath);
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"Error locating file.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"Error while copying file.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+            }
+        }
     }
+    
 }

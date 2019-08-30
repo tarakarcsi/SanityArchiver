@@ -36,13 +36,16 @@ namespace SanityArchiver
             this.driveBox_left = new System.Windows.Forms.ListView();
             this.driveBox_right = new System.Windows.Forms.ListView();
             this.backButton = new System.Windows.Forms.Button();
+            this.backButton_right = new System.Windows.Forms.Button();
+            this.CopyFileButton = new System.Windows.Forms.Button();
+            this.MoveFileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ZipFileButton
             // 
             this.ZipFileButton.Location = new System.Drawing.Point(12, 12);
             this.ZipFileButton.Name = "ZipFileButton";
-            this.ZipFileButton.Size = new System.Drawing.Size(108, 27);
+            this.ZipFileButton.Size = new System.Drawing.Size(82, 27);
             this.ZipFileButton.TabIndex = 2;
             this.ZipFileButton.Text = "Zip";
             this.ZipFileButton.UseVisualStyleBackColor = true;
@@ -101,11 +104,43 @@ namespace SanityArchiver
             this.backButton.UseVisualStyleBackColor = true;
             this.backButton.Click += new System.EventHandler(this.backButton_Click_1);
             // 
+            // backButton_right
+            // 
+            this.backButton_right.Location = new System.Drawing.Point(434, 50);
+            this.backButton_right.Name = "backButton_right";
+            this.backButton_right.Size = new System.Drawing.Size(48, 26);
+            this.backButton_right.TabIndex = 9;
+            this.backButton_right.Text = "<-";
+            this.backButton_right.UseVisualStyleBackColor = true;
+            // 
+            // CopyFileButton
+            // 
+            this.CopyFileButton.Location = new System.Drawing.Point(112, 12);
+            this.CopyFileButton.Name = "CopyFileButton";
+            this.CopyFileButton.Size = new System.Drawing.Size(82, 27);
+            this.CopyFileButton.TabIndex = 10;
+            this.CopyFileButton.Text = "Copy";
+            this.CopyFileButton.UseVisualStyleBackColor = true;
+            this.CopyFileButton.Click += new System.EventHandler(this.CopyFileButton_Click);
+            // 
+            // MoveFileButton
+            // 
+            this.MoveFileButton.Location = new System.Drawing.Point(215, 12);
+            this.MoveFileButton.Name = "MoveFileButton";
+            this.MoveFileButton.Size = new System.Drawing.Size(82, 27);
+            this.MoveFileButton.TabIndex = 11;
+            this.MoveFileButton.Text = "Move";
+            this.MoveFileButton.UseVisualStyleBackColor = true;
+            this.MoveFileButton.Click += new System.EventHandler(this.MoveFileButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.MoveFileButton);
+            this.Controls.Add(this.CopyFileButton);
+            this.Controls.Add(this.backButton_right);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.driveBox_right);
             this.Controls.Add(this.driveBox_left);
@@ -136,6 +171,9 @@ namespace SanityArchiver
         private System.Windows.Forms.ListView driveBox_left;
         private System.Windows.Forms.ListView driveBox_right;
         private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.Button backButton_right;
+        private System.Windows.Forms.Button CopyFileButton;
+        private System.Windows.Forms.Button MoveFileButton;
     }
 }
 
